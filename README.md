@@ -1,5 +1,10 @@
 # NLC · 自然语言命令行
 
+[![tests](https://github.com/Gong-Qin/nlc/actions/workflows/test.yml/badge.svg)](https://github.com/Gong-Qin/nlc/actions/workflows/test.yml)
+[![release](https://img.shields.io/github/v/release/Gong-Qin/nlc)](https://github.com/Gong-Qin/nlc/releases)
+[![license](https://img.shields.io/github/license/Gong-Qin/nlc)](LICENSE)
+[![python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
+
 > **Natural Language Command-line** —— 在人与命令行之间加一层 AI 翻译。
 
 ```

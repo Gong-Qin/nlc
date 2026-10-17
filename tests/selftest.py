@@ -12,6 +12,14 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# 英文 Windows 的控制台默认 cp1252，打印中文会 UnicodeEncodeError —— 统一强制 UTF-8。
+# 这是 windows-latest 上真炸过的地方：编码不对，一行测试都跑不完。
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[attr-defined]
+    except Exception:
+        pass
+
 from nlc.risk import ALLOW, BLOCK, CONFIRM, assess, explain  # noqa: E402
 from nlc.tokenizer import shell_words, summarize, tokenize  # noqa: E402
 

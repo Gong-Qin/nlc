@@ -20,6 +20,13 @@ import tkinter as tk
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# 英文 Windows 的控制台默认 cp1252，打印中文会 UnicodeEncodeError —— 统一强制 UTF-8。
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[attr-defined]
+    except Exception:
+        pass
+
 # 用独立的配置目录，避免冒烟测试弄脏用户真实的配置
 _TMP = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_gui_smoke_cfg")
 os.environ["NLC_CONFIG_DIR"] = _TMP
