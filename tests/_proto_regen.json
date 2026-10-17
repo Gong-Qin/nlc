@@ -1,0 +1,13 @@
+{
+ "old": "du -sh */ | sort -rh | head -n 10",
+ "killed": [
+  9,
+  10,
+  11,
+  12,
+  13
+ ],
+ "new": "du -sh */ | sort -rh | sed -n '1,10p'",
+ "summary": "列出当前目录下最大的十个文件夹",
+ "notes": "sed -n '1,10p' 取前 10 行，效果同 head -n 10"
+}

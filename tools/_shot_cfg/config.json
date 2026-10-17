@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "active": "auto",
+  "fallback_chain": [
+    "deepseek",
+    "glm",
+    "qwen",
+    "kimi",
+    "ollama",
+    "lan",
+    "offline"
+  ],
+  "providers": [
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "base_url": "https://api.deepseek.com/v1",
+      "model": "deepseek-chat",
+      "kind": "cloud",
+      "enabled": true,
+      "timeout": 60,
+      "note": "中文强、价格低，接口标准。推荐首选",
+      "key_env": "NLC_API_KEY_DEEPSEEK"
+    },
+    {
+      "id": "glm",
+      "name": "智谱 GLM",
+      "base_url": "https://open.bigmodel.cn/api/paas/v4",
+      "model": "glm-4-flash",
+      "kind": "cloud",
+      "enabled": true,
+      "timeout": 60,
+      "note": "有免费档",
+      "key_env": "NLC_API_KEY_GLM"
+    },
+    {
+      "id": "qwen",
+      "name": "通义千问（阿里）",
+      "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+      "model": "qwen-plus",
+      "kind": "cloud",
+      "enabled": true,
+      "timeout": 60,
+      "note": "阿里云账号直接开通",
+      "key_env": "NLC_API_KEY_QWEN"
+    },
+    {
+      "id": "kimi",
+      "name": "Kimi（月之暗面）",
+      "base_url": "https://api.moonshot.cn/v1",
+      "model": "moonshot-v1-8k",
+      "kind": "cloud",
+      "enabled": true,
+      "timeout": 60,
+      "note": "长文本见长",
+      "key_env": "NLC_API_KEY_KIMI"
+    },
+    {
+      "id": "siliconflow",
+      "name": "硅基流动",
+      "base_url": "https://api.siliconflow.cn/v1",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "kind": "cloud",
+      "enabled": true,
+      "timeout": 60,
+      "note": "聚合多家开源模型",
+      "key_env": "NLC_API_KEY_SILICONFLOW"
+    },
+    {
+      "id": "ollama",
+      "name": "本地模型（Ollama）",
+      "base_url": "http://127.0.0.1:11434/v1",
+      "model": "qwen2.5:1.5b",
+      "kind": "local",
+      "enabled": true,
+      "timeout": 60,
+      "note": "完全离线，不需要密钥。本机算力有限，建议小模型",
+      "key_env": "NLC_API_KEY_OLLAMA"
+    },
+    {
+      "id": "lan",
+      "name": "局域网/电脑上的模型",
+      "base_url": "http://127.0.0.1:11434/v1",
+      "model": "",
+      "kind": "lan",
+      "enabled": true,
+      "timeout": 60,
+      "note": "指向另一台机器上的模型服务。跨网段可用 adb reverse 打通",
+      "key_env": "NLC_API_KEY_LAN"
+    },
+    {
+      "id": "custom",
+      "name": "自定义",
+      "base_url": "",
+      "model": "",
+      "kind": "custom",
+      "enabled": true,
+      "timeout": 60,
+      "note": "任何 OpenAI 兼容的服务",
+      "key_env": "NLC_API_KEY_CUSTOM"
+    }
+  ],
+  "ui": {
+    "theme": "day",
+    "translate_enabled": true,
+    "danger_full_access": false,
+    "shell": ""
+  }
+}

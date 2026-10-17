@@ -1,0 +1,58 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.os }} · py${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.9", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      # tkinter + 虚拟屏：Ubuntu 上跑界面冒烟需要这两样
+      - name: 安装 Linux 图形依赖
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-tk xvfb
+
+      # ① 核心基线：任何平台都必须全绿，这是"没改坏东西"的唯一证据
+      - name: 核心自测（138 项）
+        run: python tests/selftest.py
+
+      # ② Windows 侧风险规则（cmd / PowerShell），只在 Windows 有意义
+      #    先打包：其中 4 项检查 zip 产物本身（顶层启动器、纯 ASCII、转发关系）。
+      #    干净检出时这 4 项会自动跳过并计成 242，打包后才是完整的 246。
+      - name: 打包（供产物检查用）
+        if: runner.os == 'Windows'
+        run: python packaging/build_package.py --windows
+
+      - name: Windows 侧规则自测（246 项）
+        if: runner.os == 'Windows'
+        run: python tests/selftest_win.py
+
+      # ③ MCP 端到端：真起子进程走 stdio，不依赖网络
+      - name: MCP 端到端（22 项）
+        run: python tests/mcp_stdio_test.py
+
+      # ④ 界面冒烟：Windows 原生；Linux 走 Xvfb
+      - name: 界面冒烟（Windows）
+        if: runner.os == 'Windows'
+        run: python tests/gui_smoke.py
+
+      - name: 界面冒烟（Linux + Xvfb）
+        if: runner.os == 'Linux'
+        run: xvfb-run -a python tests/gui_smoke.py
