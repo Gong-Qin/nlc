@@ -34,6 +34,13 @@ from datetime import datetime
 from pathlib import Path
 from typing import List
 
+# 英文 Windows 的控制台默认 cp1252，打印中文会 UnicodeEncodeError —— 统一强制 UTF-8。
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[attr-defined]
+    except Exception:
+        pass
+
 HERE = Path(__file__).resolve().parent
 SRC = HERE.parent                      # 项目根目录（nlc/ 的上一层）
 
